@@ -43,6 +43,20 @@ public:
       }
     }
 
+    void pop_back() {
+        if(head == NULL) {
+            cout<< "LL is Empty\n";
+            return;
+        }
+        Node* temp = head;
+        while(temp->next != tail) {
+            temp = temp-> next;
+        }
+        temp->next = NULL;
+        delete tail;
+        tail = temp;
+    }
+
     void pop_front() {
       if(head == NULL) {
         cout << "LL is empty\n";
@@ -55,6 +69,38 @@ public:
       delete temp;
     }
 
+    void insert(int val, int pos) {
+        if(pos < 0) {
+            cout<< "Invalid pos\n";
+            return;
+        }
+        if(pos == 0) {
+            push_front(val);
+            return;
+        }
+
+        Node* temp = head;
+        for(int i=0; i<pos-1; i++) {
+            temp = temp->next;
+        }
+
+        Node* newNode = new Node(val);
+        newNode->next = temp->next;
+        temp->next = newNode;
+    }
+
+    int search(int key){
+        Node* temp = head;
+        int idx = 0;
+
+        while(temp != NULL) {
+            if(temp->data == key) {
+                return idx;
+            }
+            temp = temp->next;
+            idx++;
+        }
+    }
     // utility function to display list
     void printList() {
         Node* temp = head;
@@ -73,6 +119,7 @@ int main() {
     l1.push_front(2);
     l1.push_front(3);
 
+    l1.insert(4, 1);
     l1.push_back(4);
     l1.printList();  // output: 3 -> 2 -> 1 -> NULL
     l1.pop_front();
